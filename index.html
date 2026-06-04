@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MIRL Map — put your photographs on a map, and tell their stories</title>
+<meta name="description" content="A free, friendly tool from MIRL (UC Santa Barbara) for documenting a place through photographs. Make your own interactive map and photo essay. No coding required.">
+
+<!-- Social preview. EDIT ME: set these to your hosted address. -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="MIRL Map">
+<meta property="og:description" content="Put your photographs on a map, and tell their stories. A free documentary photo-map tool from MIRL, UC Santa Barbara.">
+<meta property="og:url" content="https://mirl-map.mirl.arthistory.ucsb.edu/">
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='10' fill='%233c4a2e'/><circle cx='32' cy='27' r='9' fill='%23f0e8d0'/><circle cx='32' cy='27' r='3.4' fill='%233c4a2e'/><path d='M32 36 L24 50 L40 50 Z' fill='%23f0e8d0'/></svg>">
+
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Spectral:ital,wght@0,400;1,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap"/>
+
+<style>
+  :root{
+    --bg:#e8eed8; --panel:#f2f4e2; --ink:#2e2818; --ink2:#5e5238; --ink3:#85724e;
+    --brown:#5a3e28; --brown2:#7a5538; --line:#c2cda6; --gold:#c8a050;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:"IBM Plex Sans",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:980px; margin:0 auto; padding:0 24px}
+  h1,h2,h3{font-family:"Cormorant Garamond",Georgia,serif; font-weight:600; color:var(--brown); line-height:1.1; margin:0}
+  a{color:var(--brown2)}
+  .eyebrow{font-size:.78rem; letter-spacing:.14em; text-transform:uppercase; color:var(--ink3); font-weight:600}
+
+  /* Hero */
+  header{padding:84px 0 64px; text-align:center; border-bottom:1px solid var(--line)}
+  header h1{font-size:5rem; margin:18px 0 6px}
+  .tagline{font-family:"Spectral",Georgia,serif; font-style:italic; font-size:1.7rem; color:var(--ink); margin:0 0 22px}
+  .lede{max-width:640px; margin:0 auto 34px; font-size:1.12rem; color:var(--ink2)}
+  .cta-row{display:flex; gap:16px; justify-content:center; flex-wrap:wrap}
+  .btn{
+    display:inline-flex; align-items:center; gap:9px; padding:15px 30px; border-radius:8px;
+    font-weight:600; font-size:1.05rem; text-decoration:none; transition:.15s;
+  }
+  .btn-primary{background:var(--brown); color:#f4eedd; box-shadow:0 2px 10px rgba(90,62,40,.28)}
+  .btn-primary:hover{background:var(--brown2); transform:translateY(-1px)}
+  .btn-ghost{background:transparent; color:var(--brown); border:1.5px solid var(--line)}
+  .btn-ghost:hover{border-color:var(--brown); background:#fff6}
+  .cta-note{margin-top:16px; font-size:.9rem; color:var(--ink3)}
+
+  /* Sections */
+  section{padding:60px 0}
+  section + section{border-top:1px solid var(--line)}
+  .sec-h{text-align:center; margin-bottom:40px}
+  .sec-h h2{font-size:2.6rem}
+  .sec-h p{color:var(--ink2); margin:10px auto 0; max-width:620px}
+
+  .steps{display:grid; grid-template-columns:repeat(3,1fr); gap:22px}
+  .step{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:26px}
+  .step .num{font-family:"Cormorant Garamond",serif; font-size:2.4rem; color:var(--gold); line-height:1}
+  .step h3{font-size:1.5rem; margin:8px 0 8px}
+  .step p{margin:0; color:var(--ink2); font-size:.98rem}
+
+  .uses{display:flex; flex-wrap:wrap; gap:12px; justify-content:center; max-width:760px; margin:0 auto}
+  .chip{background:var(--panel); border:1px solid var(--line); border-radius:999px; padding:9px 18px; color:var(--ink); font-size:.96rem}
+
+  .features{display:grid; grid-template-columns:repeat(2,1fr); gap:14px 36px; max-width:760px; margin:0 auto}
+  .feat{display:flex; gap:12px; align-items:flex-start}
+  .feat .dot{flex:none; width:9px; height:9px; border-radius:50%; background:var(--gold); margin-top:9px}
+  .feat b{color:var(--ink)}
+  .feat span{color:var(--ink2)}
+
+  .closing{text-align:center}
+  .closing h2{font-size:2.4rem}
+  .closing .btn{margin-top:24px}
+
+  footer{padding:46px 0; border-top:1px solid var(--line); color:var(--ink3); font-size:.92rem; text-align:center}
+  footer a{color:var(--brown2); text-decoration:none}
+  footer a:hover{text-decoration:underline}
+  footer .links{margin-bottom:12px}
+  footer .links a{margin:0 10px}
+
+  @media(max-width:720px){
+    header h1{font-size:3.4rem} .tagline{font-size:1.35rem}
+    .steps{grid-template-columns:1fr} .features{grid-template-columns:1fr}
+    .sec-h h2{font-size:2rem}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="eyebrow">Material / Image Research Lab &middot; UC Santa Barbara</div>
+    <h1>MIRL Map</h1>
+    <p class="tagline">Put your photographs on a map, and tell their stories.</p>
+    <p class="lede">
+      A free, friendly tool for documenting a place through photographs. Pin each
+      photo to where it was taken, add a caption and as much or as little writing
+      as you like, and you have an interactive map and a flowing photo essay,
+      side by side. Made for the arts, humanities, and cultural heritage.
+      No coding required.
+    </p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="https://github.com/mirl-ucsb/mirl-map/generate">
+        &#9733;&nbsp; Create your own map
+      </a>
+      <a class="btn btn-ghost" href="https://mirl-ucsb.github.io/mirl-map/">
+        See a live example
+      </a>
+    </div>
+    <p class="cta-note">Creating your map opens GitHub, where you sign in and a copy is made in your own account. Free.</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="sec-h">
+      <div class="eyebrow">How it works</div>
+      <h2>Three steps to your own map</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="num">1</div>
+        <h3>Make your copy</h3>
+        <p>Click "Create your own map" and sign in with GitHub. A fresh copy of MIRL Map appears in your own account in one click. It is yours, start to finish.</p>
+      </div>
+      <div class="step">
+        <div class="num">2</div>
+        <h3>Add photographs and stories</h3>
+        <p>Through a simple web editor, or a few plain text files if you prefer. Drag in a photo, write a caption and a narrative. The location is read from the photo for you.</p>
+      </div>
+      <div class="step">
+        <div class="num">3</div>
+        <h3>Publish and share</h3>
+        <p>Put your living map and photo essay online for free, at an address you can share. Plain photographs and text that will still open years from now.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-h">
+      <div class="eyebrow">What you might make</div>
+      <h2>If it can be photographed and placed on a map</h2>
+    </div>
+    <div class="uses">
+      <span class="chip">A neighborhood walk</span>
+      <span class="chip">A single building or monument</span>
+      <span class="chip">An archaeological site</span>
+      <span class="chip">A memory map</span>
+      <span class="chip">An oral-history project</span>
+      <span class="chip">A field survey</span>
+      <span class="chip">An exhibition</span>
+      <span class="chip">A pilgrimage route</span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-h">
+      <div class="eyebrow">What it does well</div>
+      <h2>Everything you need, nothing you do not</h2>
+      <p>A new map is just your photographs and your words. The rest waits quietly until you reach for it.</p>
+    </div>
+    <div class="features">
+      <div class="feat"><span class="dot"></span><span><b>An interactive map and a photo essay,</b> from the very same photographs and writing.</span></div>
+      <div class="feat"><span class="dot"></span><span><b>Proper citations,</b> with a ready-made reference for each photograph in Chicago, MLA, APA, or BibTeX.</span></div>
+      <div class="feat"><span class="dot"></span><span><b>Search</b> across every caption and narrative at once.</span></div>
+      <div class="feat"><span class="dot"></span><span><b>Optional layers:</b> timelines, statistics, oral-history voices, before-and-after photos, historical map overlays.</span></div>
+      <div class="feat"><span class="dot"></span><span><b>More than one language,</b> including right-to-left scripts such as Arabic.</span></div>
+      <div class="feat"><span class="dot"></span><span><b>Accessible by design,</b> with larger text, high contrast, and reduced motion.</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="closing">
+  <div class="wrap">
+    <h2>Start your map</h2>
+    <p class="lede" style="margin-top:14px">It is free, it is yours, and you can be looking at your first photograph on a map within an afternoon.</p>
+    <a class="btn btn-primary" href="https://github.com/mirl-ucsb/mirl-map/generate">&#9733;&nbsp; Create your own map</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="links">
+      <a href="https://github.com/mirl-ucsb/mirl-map">The project on GitHub</a>
+      <a href="https://github.com/mirl-ucsb/mirl-map/blob/main/CONTENT-GUIDE.md">Content guide</a>
+      <a href="https://github.com/mirl-ucsb/mirl-map/blob/main/ADMIN-SETUP.md">Publishing guide</a>
+      <a href="https://mirl.arthistory.ucsb.edu">MIRL</a>
+    </div>
+    Built and maintained by the Material / Image Research Lab (MIRL),
+    Department of History of Art &amp; Architecture, UC Santa Barbara.
+  </div>
+</footer>
+
+</body>
+</html>
