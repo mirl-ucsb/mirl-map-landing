@@ -54,11 +54,12 @@
 
   /* Live example figure */
   .figure{max-width:900px; margin:52px auto 0}
-  .frame{position:relative; background:#fff; border:1px solid var(--line); border-radius:13px; overflow:hidden; box-shadow:0 14px 40px rgba(27,39,51,.13)}
+  .frame{position:relative; display:block; text-decoration:none; background:#fff; border:1px solid var(--line); border-radius:13px; overflow:hidden; box-shadow:0 14px 40px rgba(27,39,51,.13); transition:box-shadow .15s}
+  .frame:hover{box-shadow:0 16px 46px rgba(27,39,51,.20)}
   .frame .bar{display:flex; align-items:center; gap:7px; padding:11px 14px; background:#eef2f6; border-bottom:1px solid var(--line)}
   .frame .bar .d{width:11px; height:11px; border-radius:50%; background:#ccd5de}
   .frame .bar .u{margin-left:12px; font-family:"JetBrains Mono",monospace; font-size:.8rem; color:var(--ink3); overflow:hidden; white-space:nowrap; text-overflow:ellipsis}
-  .frame iframe{display:block; width:100%; height:460px; border:0; background:var(--bg); pointer-events:none}
+  .frame img{display:block; width:100%; vertical-align:top}
   .frame .cover{position:absolute; inset:0; z-index:3; display:block}
   .frame .open{position:absolute; right:13px; bottom:13px; z-index:4; background:rgba(27,39,51,.88); color:#eef3f7; font-size:.82rem; font-weight:500; padding:7px 14px; border-radius:999px; transition:.15s}
   .frame:hover .open{background:var(--teal)}
@@ -103,7 +104,6 @@
   @media(max-width:720px){
     header{padding:56px 0 44px}
     header h1{font-size:3rem} .tagline{font-size:1.28rem}
-    .frame iframe{height:300px}
     .steps{grid-template-columns:1fr} .features{grid-template-columns:1fr; gap:16px}
     .sec-h h2{font-size:1.9rem} section{padding:50px 0}
   }
@@ -137,15 +137,15 @@
 
 <div class="wrap">
   <figure class="figure" style="margin-bottom:0">
-    <div class="frame">
+    <a class="frame" href="https://mirl-ucsb.github.io/mirl-map-example/" target="_blank" rel="noopener" aria-label="Open the live example, The Managed Edge">
       <div class="bar"><span class="d"></span><span class="d"></span><span class="d"></span><span class="u">mirl-ucsb.github.io/mirl-map-example</span></div>
-      <iframe src="https://mirl-ucsb.github.io/mirl-map-example/gallery.html" loading="lazy" title="A live example map and photo essay"></iframe>
-      <a class="cover" href="https://mirl-ucsb.github.io/mirl-map-example/" target="_blank" rel="noopener" aria-label="Open the live example"></a>
+      <img src="images/example.jpg" loading="lazy" alt="The example map, The Managed Edge: a satellite view of the UC Santa Barbara coast with photographs pinned along a bluff path, and a side panel showing one photograph with its caption, a narrative, and a citation.">
       <span class="open">Open the example &#8599;</span>
-    </div>
+    </a>
     <figcaption class="figcap">
-      A live example: a documentary walk along the bluffs where UC Santa Barbara meets the
-      Pacific, presented as an interactive map and the photo essay shown here.
+      A live example: <em>The Managed Edge</em>, a documentary walk along the bluffs where UC
+      Santa Barbara meets the Pacific. Each photograph sits where it was taken, beside the
+      writing that reads it.
     </figcaption>
   </figure>
 </div>
