@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MIRL Map: put your photographs on a map, and tell their stories</title>
-<meta name="description" content="A free, friendly tool from MIRL (UC Santa Barbara) for documenting a place through photographs. Make your own interactive map and photo essay. No coding required.">
+<title>MIRL Map: documentary photo-mapping for the arts and humanities</title>
+<meta name="description" content="A free, open-source platform from the Material / Image Research Lab at UC Santa Barbara for documenting a place through geolocated photographs and interpretive writing, presented as an interactive map and a photo essay.">
 
 <!-- Social preview. EDIT ME: set these to your hosted address. -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="MIRL Map">
-<meta property="og:description" content="Put your photographs on a map, and tell their stories. A free documentary photo-map tool from MIRL, UC Santa Barbara.">
+<meta property="og:description" content="Documentary photo-mapping for the arts, humanities, and cultural heritage. Free and open source, from the Material / Image Research Lab at UC Santa Barbara.">
 <meta property="og:url" content="https://mirl-map.mirl.arthistory.ucsb.edu/">
 
 <meta name="theme-color" content="#1b2733">
@@ -17,77 +17,95 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap"/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"/>
 
 <style>
   :root{
     --bg:#e9edf1; --panel:#ffffff; --ink:#1b2733; --ink2:#46566a; --ink3:#6b7c8f;
-    --brown:#0f766e; --brown2:#0c5d56; --line:#d3dae1; --gold:#f59e0b;
+    --teal:#0f766e; --teal2:#0c5d56; --line:#d3dae1; --gold:#f59e0b;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{
     margin:0; background:var(--bg); color:var(--ink);
     font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
-    line-height:1.6; -webkit-font-smoothing:antialiased;
+    line-height:1.65; -webkit-font-smoothing:antialiased;
   }
-  .wrap{max-width:980px; margin:0 auto; padding:0 24px}
-  h1,h2,h3{font-family:"Space Grotesk",system-ui,sans-serif; font-weight:600; color:var(--ink); line-height:1.1; margin:0}
-  a{color:var(--brown2)}
-  .eyebrow{font-size:.78rem; letter-spacing:.14em; text-transform:uppercase; color:var(--ink3); font-weight:600}
+  .wrap{max-width:1000px; margin:0 auto; padding:0 24px}
+  h1,h2,h3{font-family:"Space Grotesk",system-ui,sans-serif; font-weight:600; color:var(--ink); line-height:1.12; margin:0}
+  a{color:var(--teal2)}
+  .eyebrow{font-size:.76rem; letter-spacing:.16em; text-transform:uppercase; color:var(--ink3); font-weight:600}
 
   /* Hero */
-  header{padding:84px 0 64px; text-align:center; border-bottom:1px solid var(--line)}
-  header h1{font-size:5rem; margin:18px 0 6px; color:var(--brown)}
-  .tagline{font-family:"Inter",system-ui,sans-serif; font-weight:500; font-size:1.5rem; color:var(--ink2); margin:0 0 22px}
-  .lede{max-width:640px; margin:0 auto 34px; font-size:1.12rem; color:var(--ink2)}
-  .cta-row{display:flex; gap:16px; justify-content:center; flex-wrap:wrap}
+  header{padding:80px 0 56px; text-align:center}
+  header h1{font-size:4.2rem; letter-spacing:-.01em; margin:16px 0 8px; color:var(--teal)}
+  .tagline{font-family:"Space Grotesk",system-ui,sans-serif; font-weight:500; font-size:1.55rem; color:var(--ink); margin:0 auto 22px; max-width:760px; line-height:1.25}
+  .lede{max-width:680px; margin:0 auto 32px; font-size:1.1rem; color:var(--ink2)}
+  .cta-row{display:flex; gap:14px; justify-content:center; flex-wrap:wrap}
   .btn{
-    display:inline-flex; align-items:center; gap:9px; padding:15px 30px; border-radius:8px;
-    font-weight:600; font-size:1.05rem; text-decoration:none; transition:.15s;
+    display:inline-flex; align-items:center; gap:9px; padding:14px 28px; border-radius:8px;
+    font-weight:600; font-size:1.02rem; text-decoration:none; transition:.15s;
   }
-  .btn-primary{background:var(--brown); color:#eef3f7; box-shadow:0 2px 10px rgba(15,118,110,.28)}
-  .btn-primary:hover{background:var(--brown2); transform:translateY(-1px)}
-  .btn-ghost{background:transparent; color:var(--brown); border:1.5px solid var(--line)}
-  .btn-ghost:hover{border-color:var(--brown); background:#fff6}
-  .cta-note{margin-top:16px; font-size:.9rem; color:var(--ink3)}
+  .btn-primary{background:var(--teal); color:#eef3f7; box-shadow:0 2px 12px rgba(15,118,110,.26)}
+  .btn-primary:hover{background:var(--teal2); transform:translateY(-1px)}
+  .btn-ghost{background:transparent; color:var(--teal); border:1.5px solid var(--line)}
+  .btn-ghost:hover{border-color:var(--teal); background:#ffffff88}
+  .cta-note{margin-top:15px; font-size:.9rem; color:var(--ink3)}
+
+  /* Live example figure */
+  .figure{max-width:900px; margin:52px auto 0}
+  .frame{position:relative; background:#fff; border:1px solid var(--line); border-radius:13px; overflow:hidden; box-shadow:0 14px 40px rgba(27,39,51,.13)}
+  .frame .bar{display:flex; align-items:center; gap:7px; padding:11px 14px; background:#eef2f6; border-bottom:1px solid var(--line)}
+  .frame .bar .d{width:11px; height:11px; border-radius:50%; background:#ccd5de}
+  .frame .bar .u{margin-left:12px; font-family:"JetBrains Mono",monospace; font-size:.8rem; color:var(--ink3); overflow:hidden; white-space:nowrap; text-overflow:ellipsis}
+  .frame iframe{display:block; width:100%; height:460px; border:0; background:var(--bg); pointer-events:none}
+  .frame .cover{position:absolute; inset:0; z-index:3; display:block}
+  .frame .open{position:absolute; right:13px; bottom:13px; z-index:4; background:rgba(27,39,51,.88); color:#eef3f7; font-size:.82rem; font-weight:500; padding:7px 14px; border-radius:999px; transition:.15s}
+  .frame:hover .open{background:var(--teal)}
+  .figcap{text-align:center; color:var(--ink3); font-size:.92rem; margin:14px auto 0; max-width:640px}
 
   /* Sections */
-  section{padding:60px 0}
-  section + section{border-top:1px solid var(--line)}
-  .sec-h{text-align:center; margin-bottom:40px}
-  .sec-h h2{font-size:2.6rem}
-  .sec-h p{color:var(--ink2); margin:10px auto 0; max-width:620px}
+  section{padding:64px 0}
+  section + section, .figure + section, header + section{border-top:1px solid var(--line)}
+  .sec-h{text-align:center; margin-bottom:42px}
+  .sec-h h2{font-size:2.5rem}
+  .sec-h p{color:var(--ink2); margin:12px auto 0; max-width:640px}
 
   .steps{display:grid; grid-template-columns:repeat(3,1fr); gap:22px}
   .step{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:26px}
-  .step .num{font-family:"Space Grotesk",system-ui,sans-serif; font-weight:600; font-size:2.4rem; color:var(--gold); line-height:1}
-  .step h3{font-size:1.5rem; margin:8px 0 8px}
+  .step .num{font-family:"Space Grotesk",system-ui,sans-serif; font-weight:600; font-size:1.5rem; color:var(--teal); width:42px; height:42px; border:1.5px solid var(--line); border-radius:50%; display:flex; align-items:center; justify-content:center}
+  .step h3{font-size:1.4rem; margin:16px 0 8px}
   .step p{margin:0; color:var(--ink2); font-size:.98rem}
 
-  .uses{display:flex; flex-wrap:wrap; gap:12px; justify-content:center; max-width:760px; margin:0 auto}
-  .chip{background:var(--panel); border:1px solid var(--line); border-radius:999px; padding:9px 18px; color:var(--ink); font-size:.96rem}
+  .uses{display:flex; flex-wrap:wrap; gap:12px; justify-content:center; max-width:800px; margin:0 auto}
+  .chip{background:var(--panel); border:1px solid var(--line); border-radius:999px; padding:9px 18px; color:var(--ink); font-size:.95rem}
 
-  .features{display:grid; grid-template-columns:repeat(2,1fr); gap:14px 36px; max-width:760px; margin:0 auto}
-  .feat{display:flex; gap:12px; align-items:flex-start}
+  .features{display:grid; grid-template-columns:repeat(2,1fr); gap:18px 40px; max-width:820px; margin:0 auto}
+  .feat{display:flex; gap:13px; align-items:flex-start}
   .feat .dot{flex:none; width:9px; height:9px; border-radius:50%; background:var(--gold); margin-top:9px}
-  .feat b{color:var(--ink)}
+  .feat b{color:var(--ink); font-weight:600}
   .feat span{color:var(--ink2)}
+
+  .lineage{text-align:center}
+  .lineage p{max-width:680px; margin:0 auto; font-size:1.08rem; color:var(--ink2)}
+  .lineage .eyebrow{display:block; margin-bottom:14px}
 
   .closing{text-align:center}
   .closing h2{font-size:2.4rem}
   .closing .btn{margin-top:24px}
 
-  footer{padding:46px 0; border-top:1px solid var(--line); color:var(--ink3); font-size:.92rem; text-align:center}
-  footer a{color:var(--brown2); text-decoration:none}
+  footer{padding:48px 0; border-top:1px solid var(--line); color:var(--ink3); font-size:.92rem; text-align:center}
+  footer a{color:var(--teal2); text-decoration:none}
   footer a:hover{text-decoration:underline}
-  footer .links{margin-bottom:12px}
-  footer .links a{margin:0 10px}
+  footer .links{margin-bottom:14px}
+  footer .links a{margin:0 11px; white-space:nowrap}
 
   @media(max-width:720px){
-    header h1{font-size:3.4rem} .tagline{font-size:1.35rem}
-    .steps{grid-template-columns:1fr} .features{grid-template-columns:1fr}
-    .sec-h h2{font-size:2rem}
+    header{padding:56px 0 44px}
+    header h1{font-size:3rem} .tagline{font-size:1.28rem}
+    .frame iframe{height:300px}
+    .steps{grid-template-columns:1fr} .features{grid-template-columns:1fr; gap:16px}
+    .sec-h h2{font-size:1.9rem} section{padding:50px 0}
   }
 </style>
 </head>
@@ -97,13 +115,13 @@
   <div class="wrap">
     <div class="eyebrow">Material / Image Research Lab &middot; UC Santa Barbara</div>
     <h1>MIRL Map</h1>
-    <p class="tagline">Put your photographs on a map, and tell their stories.</p>
+    <p class="tagline">Document a place through geolocated photographs and the writing that interprets them.</p>
     <p class="lede">
-      A free, friendly tool for documenting a place through photographs. Pin each
-      photo to where it was taken, add a caption and as much or as little writing
-      as you like, and you have an interactive map and a flowing photo essay,
-      side by side. Made for the arts, humanities, and cultural heritage.
-      No coding required.
+      MIRL Map turns a body of photographs into two readings of the same material: an
+      interactive map, where each image rests at the place it was made, and a photo
+      essay that moves through them in sequence. Add a caption and as much
+      interpretation as the work asks for. Built for fieldwork, archives, exhibitions,
+      and the classroom, and yours to own, cite, and keep.
     </p>
     <div class="cta-row">
       <a class="btn btn-primary" href="https://mirl-map-auth.mirl-ucsb.workers.dev/create">
@@ -113,31 +131,46 @@
         See a live example
       </a>
     </div>
-    <p class="cta-note">Creating your map opens GitHub, where you sign in and a copy is made in your own account. Free.</p>
+    <p class="cta-note">Creating a map opens GitHub, where you sign in and a copy is made in your own account. Free, open source, and no coding required.</p>
   </div>
 </header>
+
+<div class="wrap">
+  <figure class="figure" style="margin-bottom:0">
+    <div class="frame">
+      <div class="bar"><span class="d"></span><span class="d"></span><span class="d"></span><span class="u">mirl-ucsb.github.io/mirl-map-example</span></div>
+      <iframe src="https://mirl-ucsb.github.io/mirl-map-example/gallery.html" loading="lazy" title="A live example map and photo essay"></iframe>
+      <a class="cover" href="https://mirl-ucsb.github.io/mirl-map-example/" target="_blank" rel="noopener" aria-label="Open the live example"></a>
+      <span class="open">Open the example &#8599;</span>
+    </div>
+    <figcaption class="figcap">
+      A live example: a documentary walk along the bluffs where UC Santa Barbara meets the
+      Pacific, presented as an interactive map and the photo essay shown here.
+    </figcaption>
+  </figure>
+</div>
 
 <section>
   <div class="wrap">
     <div class="sec-h">
       <div class="eyebrow">How it works</div>
-      <h2>Three steps to your own map</h2>
+      <h2>From sign-in to a published map</h2>
     </div>
     <div class="steps">
       <div class="step">
         <div class="num">1</div>
-        <h3>Make your copy</h3>
-        <p>Click "Create your own map" and sign in with GitHub. A fresh copy of MIRL Map appears in your own account in one click. It is yours, start to finish.</p>
+        <h3>Make your own copy</h3>
+        <p>Sign in with GitHub and a complete copy of the platform is created in your account. You hold the repository, the images, and the text from the start.</p>
       </div>
       <div class="step">
         <div class="num">2</div>
-        <h3>Add photographs and stories</h3>
-        <p>Through a simple web editor, or a few plain text files if you prefer. Drag in a photo, write a caption and a narrative. The location is read from the photo for you.</p>
+        <h3>Add photographs and interpretation</h3>
+        <p>Work in a browser dashboard, or directly in plain text files. Each photograph takes a caption and an optional narrative; its location and orientation are read from the image itself.</p>
       </div>
       <div class="step">
         <div class="num">3</div>
-        <h3>Publish and share</h3>
-        <p>Put your living map and photo essay online for free, at an address you can share. Plain photographs and text that will still open years from now.</p>
+        <h3>Publish and preserve</h3>
+        <p>Publish your map and photo essay online at no cost, at an address you control. Everything is kept as plain images and text, legible long after the software has moved on.</p>
       </div>
     </div>
   </div>
@@ -146,18 +179,20 @@
 <section>
   <div class="wrap">
     <div class="sec-h">
-      <div class="eyebrow">What you might make</div>
-      <h2>If it can be photographed and placed on a map</h2>
+      <div class="eyebrow">What it is suited to</div>
+      <h2>One method, many projects</h2>
+      <p>MIRL Map is a method rather than a template. If a subject can be photographed and located on a map, it can be documented here.</p>
     </div>
     <div class="uses">
-      <span class="chip">A neighborhood walk</span>
-      <span class="chip">A single building or monument</span>
+      <span class="chip">A neighborhood survey</span>
+      <span class="chip">A single monument</span>
       <span class="chip">An archaeological site</span>
-      <span class="chip">A memory map</span>
       <span class="chip">An oral-history project</span>
-      <span class="chip">A field survey</span>
+      <span class="chip">A field-documentation record</span>
+      <span class="chip">A teaching collection</span>
       <span class="chip">An exhibition</span>
-      <span class="chip">A pilgrimage route</span>
+      <span class="chip">A pilgrimage or migration route</span>
+      <span class="chip">A memory map</span>
     </div>
   </div>
 </section>
@@ -165,25 +200,40 @@
 <section>
   <div class="wrap">
     <div class="sec-h">
-      <div class="eyebrow">What it does well</div>
-      <h2>Everything you need, nothing you do not</h2>
-      <p>A new map is just your photographs and your words. The rest waits quietly until you reach for it.</p>
+      <div class="eyebrow">What it supports</div>
+      <h2>Built for scholarly use</h2>
+      <p>A new map is nothing but your photographs and your words. Each further capability stays out of the way until you call on it.</p>
     </div>
     <div class="features">
-      <div class="feat"><span class="dot"></span><span><b>An interactive map and a photo essay,</b> from the very same photographs and writing.</span></div>
-      <div class="feat"><span class="dot"></span><span><b>Proper citations,</b> with a ready-made reference for each photograph in Chicago, MLA, APA, or BibTeX.</span></div>
-      <div class="feat"><span class="dot"></span><span><b>Search</b> across every caption and narrative at once.</span></div>
-      <div class="feat"><span class="dot"></span><span><b>Optional layers:</b> timelines, statistics, oral-history voices, before-and-after photos, historical map overlays.</span></div>
+      <div class="feat"><span class="dot"></span><span><b>An interactive map and a photo essay,</b> generated together from the same photographs and writing.</span></div>
+      <div class="feat"><span class="dot"></span><span><b>A citation for every photograph,</b> ready in Chicago, MLA, APA, and BibTeX.</span></div>
+      <div class="feat"><span class="dot"></span><span><b>Full-text search</b> across every caption and narrative at once.</span></div>
+      <div class="feat"><span class="dot"></span><span><b>Data you own,</b> kept as plain images and text in your own repository, free to export, archive, or move.</span></div>
       <div class="feat"><span class="dot"></span><span><b>More than one language,</b> including right-to-left scripts such as Arabic.</span></div>
-      <div class="feat"><span class="dot"></span><span><b>Accessible by design,</b> with larger text, high contrast, and reduced motion.</span></div>
+      <div class="feat"><span class="dot"></span><span><b>Accessible by design,</b> with scalable text, high contrast, and reduced motion.</span></div>
+      <div class="feat"><span class="dot"></span><span><b>Optional layers</b> when a project calls for them: timelines, statistics, oral-history voices, before-and-after photographs, and georeferenced historical maps.</span></div>
+      <div class="feat"><span class="dot"></span><span><b>Open source and free,</b> with no account to maintain and nothing to lock you in.</span></div>
     </div>
+  </div>
+</section>
+
+<section class="lineage">
+  <div class="wrap">
+    <span class="eyebrow">Where it comes from</span>
+    <h2 style="font-size:2.1rem; margin-bottom:16px">From a working project</h2>
+    <p>
+      MIRL Map began as a documentary map of the village of Lifta and was generalized so
+      that any researcher, teacher, or community could use the same method. It is developed
+      and maintained at the Material / Image Research Lab in the Department of History of
+      Art and Architecture, UC Santa Barbara.
+    </p>
   </div>
 </section>
 
 <section class="closing">
   <div class="wrap">
-    <h2>Start your map</h2>
-    <p class="lede" style="margin-top:14px">It is free, it is yours, and you can be looking at your first photograph on a map within an afternoon.</p>
+    <h2>Begin your map</h2>
+    <p class="lede" style="margin-top:14px">Free to use and yours to keep. From signing in to your first photograph on the map is a matter of minutes.</p>
     <a class="btn btn-primary" href="https://mirl-map-auth.mirl-ucsb.workers.dev/create">&#9733;&nbsp; Create your own map</a>
   </div>
 </section>
@@ -194,6 +244,7 @@
       <a href="https://github.com/mirl-ucsb/mirl-map">The project on GitHub</a>
       <a href="https://github.com/mirl-ucsb/mirl-map/blob/main/CONTENT-GUIDE.md">Content guide</a>
       <a href="https://github.com/mirl-ucsb/mirl-map/blob/main/ADMIN-SETUP.md">Publishing guide</a>
+      <a href="https://github.com/mirl-ucsb/mirl-map/blob/main/LICENSE">License</a>
       <a href="https://mirl.arthistory.ucsb.edu">MIRL</a>
     </div>
     Built and maintained by the Material / Image Research Lab (MIRL),
