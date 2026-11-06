@@ -12,108 +12,175 @@
 <meta property="og:description" content="Documentary photo-mapping for the arts, humanities, and cultural heritage. Free and open source, from the Material / Image Research Lab at UC Santa Barbara.">
 <meta property="og:url" content="https://mirl-map.mirl.arthistory.ucsb.edu/">
 
-<meta name="theme-color" content="#1b2733">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='10' fill='%231b2733'/><circle cx='32' cy='27' r='9' fill='%23e9edf1'/><circle cx='32' cy='27' r='3.4' fill='%230f766e'/><path d='M32 36 L24 50 L40 50 Z' fill='%23e9edf1'/></svg>">
-
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"/>
+<meta name="theme-color" content="#fefaf0">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 
 <style>
-  :root{
-    --bg:#e9edf1; --panel:#ffffff; --ink:#1b2733; --ink2:#46566a; --ink3:#6b7c8f;
-    --teal:#0f766e; --teal2:#0c5d56; --line:#d3dae1; --gold:#f59e0b;
-  }
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{
-    margin:0; background:var(--bg); color:var(--ink);
-    font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
-    line-height:1.65; -webkit-font-smoothing:antialiased;
-  }
-  .wrap{max-width:1000px; margin:0 auto; padding:0 24px}
-  h1,h2,h3{font-family:"Space Grotesk",system-ui,sans-serif; font-weight:600; color:var(--ink); line-height:1.12; margin:0}
-  a{color:var(--teal2)}
-  .eyebrow{font-size:.76rem; letter-spacing:.16em; text-transform:uppercase; color:var(--ink3); font-weight:600}
+  /* The Material / Image Research Lab's identity, shared with every MIRL tool:
+     paper and ink, Familjen Grotesk for names and headings, Epilogue for reading,
+     IBM Plex Mono where characters line up. MIRL Map's key is the teal of the
+     MIRL mark. Fonts are vendored in fonts/ (SIL Open Font License). */
+  @font-face { font-family: "Familjen Grotesk"; src: url("fonts/familjen-grotesk-latin-600-normal.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+  @font-face { font-family: "Familjen Grotesk"; src: url("fonts/familjen-grotesk-latin-700-normal.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+  @font-face { font-family: "Epilogue"; src: url("fonts/epilogue-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+  @font-face { font-family: "Epilogue"; src: url("fonts/epilogue-latin-500-normal.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+  @font-face { font-family: "Epilogue"; src: url("fonts/epilogue-latin-600-normal.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+  @font-face { font-family: "Plex Mono"; src: url("fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-display: swap; }
 
-  /* Hero */
-  header{padding:80px 0 56px; text-align:center}
-  header h1{font-size:4.2rem; letter-spacing:-.01em; margin:16px 0 8px; color:var(--teal)}
-  .tagline{font-family:"Space Grotesk",system-ui,sans-serif; font-weight:500; font-size:1.55rem; color:var(--ink); margin:0 auto 22px; max-width:760px; line-height:1.25}
-  .lede{max-width:680px; margin:0 auto 32px; font-size:1.1rem; color:var(--ink2)}
-  .cta-row{display:flex; gap:14px; justify-content:center; flex-wrap:wrap}
-  .btn{
-    display:inline-flex; align-items:center; gap:9px; padding:14px 28px; border-radius:8px;
-    font-weight:600; font-size:1.02rem; text-decoration:none; transition:.15s;
+  :root {
+    --sans: "Epilogue", "Helvetica Neue", Arial, sans-serif;
+    --display: "Familjen Grotesk", "Epilogue", "Helvetica Neue", Arial, sans-serif;
+    --mono: "Plex Mono", "SF Mono", Menlo, Consolas, monospace;
+    --bg: #fefaf0; --surface: #ffffff; --mat: #f1ecdf;
+    --ink: #1d1b18; --ink-2: #4f4b44; --ink-3: #6b665c;
+    --line: #e9e3d4; --line-2: #d3cbb8; --soft: #f5f0e3;
+    --key: #2ec4b6; --key-2: #ff4d6a; --key-ink: #0b6b62; --key-deep: #08524b;
+    --radius: 3px;
   }
-  .btn-primary{background:var(--teal); color:#eef3f7; box-shadow:0 2px 12px rgba(15,118,110,.26)}
-  .btn-primary:hover{background:var(--teal2); transform:translateY(-1px)}
-  .btn-ghost{background:transparent; color:var(--teal); border:1.5px solid var(--line)}
-  .btn-ghost:hover{border-color:var(--teal); background:#ffffff88}
-  .cta-note{margin-top:15px; font-size:.9rem; color:var(--ink3)}
+  * { box-sizing: border-box; }
+  html { background: var(--bg); scroll-behavior: smooth; scroll-padding-top: 84px; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--sans); font-size: 17px; line-height: 1.6;
+    -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+  }
+  a { color: var(--key-ink); }
+  a:hover { color: var(--key-deep); }
+  h1, h2, h3 { font-family: var(--display); font-weight: 600; letter-spacing: -0.02em; line-height: 1.08; margin: 0; color: var(--ink); }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 32px; }
+  .label { display: block; font-size: 14px; font-weight: 500; color: var(--ink-3); margin-bottom: 12px; }
+  :focus-visible { outline: 2px solid var(--key-ink); outline-offset: 2px; }
 
-  /* Live example figure */
-  .figure{max-width:900px; margin:52px auto 0}
-  .frame{position:relative; display:block; text-decoration:none; background:#fff; border:1px solid var(--line); border-radius:13px; overflow:hidden; box-shadow:0 14px 40px rgba(27,39,51,.13); transition:box-shadow .15s}
-  .frame:hover{box-shadow:0 16px 46px rgba(27,39,51,.20)}
-  .frame .bar{display:flex; align-items:center; gap:7px; padding:11px 14px; background:#eef2f6; border-bottom:1px solid var(--line)}
-  .frame .bar .d{width:11px; height:11px; border-radius:50%; background:#ccd5de}
-  .frame .bar .u{margin-left:12px; font-family:"JetBrains Mono",monospace; font-size:.8rem; color:var(--ink3); overflow:hidden; white-space:nowrap; text-overflow:ellipsis}
-  .frame img{display:block; width:100%; vertical-align:top}
-  .frame .cover{position:absolute; inset:0; z-index:3; display:block}
-  .frame .open{position:absolute; right:13px; bottom:13px; z-index:4; background:rgba(27,39,51,.88); color:#eef3f7; font-size:.82rem; font-weight:500; padding:7px 14px; border-radius:999px; transition:.15s}
-  .frame:hover .open{background:var(--teal)}
-  .figcap{text-align:center; color:var(--ink3); font-size:.92rem; margin:14px auto 0; max-width:640px}
+  /* The folio bar, as in every MIRL tool */
+  nav.folio {
+    position: sticky; top: 0; z-index: 40;
+    display: flex; align-items: stretch; gap: 30px;
+    height: 64px; padding: 0 28px; background: var(--bg);
+    border-bottom: 1px solid var(--line-2);
+  }
+  nav.folio .brand { position: relative; isolation: isolate; display: flex; align-items: center; gap: 9px; flex: none; color: var(--ink); text-decoration: none; }
+  nav.folio .brand .bleed { position: absolute; z-index: -1; left: -14px; top: 50%; width: 50px; height: 44px; transform: translateY(-50%); pointer-events: none; }
+  nav.folio .brand .bleed::before, nav.folio .brand .bleed::after { content: ""; position: absolute; border-radius: 50%; filter: blur(8px); }
+  nav.folio .brand .bleed::before { width: 32px; height: 32px; left: 2px; top: 4px; background: var(--key); opacity: .6; }
+  nav.folio .brand .bleed::after { width: 22px; height: 22px; left: 24px; top: 14px; background: var(--key-2); opacity: .32; }
+  nav.folio .brand b { font-family: var(--display); font-weight: 700; font-size: 14.5px; letter-spacing: -0.01em; }
+  nav.folio .brand .tool { font-family: var(--display); font-weight: 600; font-size: 23px; letter-spacing: -0.02em; line-height: 1; }
+  nav.folio .views { display: flex; gap: 24px; }
+  nav.folio .views a { display: flex; align-items: center; padding: 3px 1px 0; border-bottom: 3px solid transparent; font-size: 15px; font-weight: 500; color: var(--ink-2); text-decoration: none; }
+  nav.folio .views a:hover { color: var(--ink); border-bottom-color: var(--key); }
+  nav.folio .tools { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--sans); font-size: 15.5px; font-weight: 500; line-height: 1.2;
+    color: var(--ink); background: var(--surface); text-decoration: none;
+    border: 1px solid var(--line-2); border-radius: var(--radius); padding: 10px 18px;
+    transition: background .12s, border-color .12s;
+  }
+  .btn:hover { color: var(--ink); background: var(--soft); border-color: var(--ink-3); }
+  .btn.primary { color: var(--bg); background: var(--ink); border-color: var(--ink); }
+  .btn.primary:hover { color: var(--bg); background: #3a362f; border-color: #3a362f; }
+  .btn.large { font-size: 17px; padding: 13px 22px; }
+  nav.folio .btn { font-size: 14.5px; padding: 8px 14px; }
+
+  /* Opening */
+  header.title { padding: 84px 0 56px; position: relative; isolation: isolate; }
+  header.title::before {
+    content: ""; position: absolute; z-index: -1; left: calc(50% - 600px); top: 40px;
+    width: 220px; height: 180px; border-radius: 50%; pointer-events: none;
+    background: radial-gradient(circle at 34% 40%, var(--key) 0 30%, transparent 62%),
+                radial-gradient(circle at 76% 70%, var(--key-2) 0 18%, transparent 50%);
+    filter: blur(22px); opacity: .45;
+  }
+  header.title h1 { font-size: 76px; letter-spacing: -0.04em; line-height: 1; }
+  header.title .tagline { font-family: var(--display); font-weight: 600; font-size: 30px; letter-spacing: -0.02em; line-height: 1.2; color: var(--ink); max-width: 28ch; margin: 18px 0 20px; text-wrap: balance; }
+  header.title .lede { max-width: 62ch; color: var(--ink-2); margin: 0 0 30px; }
+  .cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .cta-note { margin: 16px 0 0; font-size: 15px; color: var(--ink-3); max-width: 62ch; }
+
+  /* The example, as a plate with its caption */
+  figure.plate { margin: 0; }
+  figure.plate > a { display: block; position: relative; text-decoration: none; background: var(--mat); border: 1px solid var(--line-2); border-radius: var(--radius); overflow: hidden; }
+  figure.plate > a img { display: block; width: 100%; height: auto; }
+  figure.plate > a:hover { border-color: var(--ink-3); }
+  figure.plate figcaption { display: flex; justify-content: space-between; gap: 24px; margin-top: 12px; font-size: 15px; color: var(--ink-2); }
+  figure.plate figcaption .url { flex: none; font-weight: 500; text-decoration: none; white-space: nowrap; }
+  figure.plate figcaption .url:hover { text-decoration: underline; text-underline-offset: 3px; }
 
   /* Sections */
-  section{padding:64px 0}
-  section + section, .figure + section, header + section{border-top:1px solid var(--line)}
-  .sec-h{text-align:center; margin-bottom:42px}
-  .sec-h h2{font-size:2.5rem}
-  .sec-h p{color:var(--ink2); margin:12px auto 0; max-width:640px}
+  section { padding: 76px 0; border-top: 1px solid var(--line-2); }
+  #how { margin-top: 64px; }
+  .lineage .sec-head { align-items: start; }
+  .sec-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 40px; margin-bottom: 40px; align-items: end; }
+  .sec-head h2 { font-size: 40px; text-wrap: balance; }
+  .sec-head p { margin: 0; color: var(--ink-2); max-width: 54ch; }
 
-  .steps{display:grid; grid-template-columns:repeat(3,1fr); gap:22px}
-  .step{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:26px}
-  .step .num{font-family:"Space Grotesk",system-ui,sans-serif; font-weight:600; font-size:1.5rem; color:var(--teal); width:42px; height:42px; border:1.5px solid var(--line); border-radius:50%; display:flex; align-items:center; justify-content:center}
-  .step h3{font-size:1.4rem; margin:16px 0 8px}
-  .step p{margin:0; color:var(--ink2); font-size:.98rem}
+  /* How it works: three stages on a rule */
+  ol.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 32px; }
+  ol.steps li { position: relative; padding-top: 18px; border-top: 1px solid var(--ink); }
+  ol.steps li::before { content: ""; position: absolute; top: -5px; left: 0; width: 9px; height: 9px; background: var(--key); }
+  ol.steps .num { display: block; font-family: var(--mono); font-size: 13px; color: var(--key-ink); margin-bottom: 10px; }
+  ol.steps h3 { font-size: 23px; margin-bottom: 10px; }
+  ol.steps p { margin: 0; color: var(--ink-2); font-size: 16px; }
 
-  .uses{display:flex; flex-wrap:wrap; gap:12px; justify-content:center; max-width:800px; margin:0 auto}
-  .chip{background:var(--panel); border:1px solid var(--line); border-radius:999px; padding:9px 18px; color:var(--ink); font-size:.95rem}
+  /* What it suits: a ruled list in columns */
+  ul.uses { list-style: none; margin: 0; padding: 0; columns: 3; column-gap: 32px; }
+  ul.uses li { break-inside: avoid; padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 17px; }
 
-  .features{display:grid; grid-template-columns:repeat(2,1fr); gap:18px 40px; max-width:820px; margin:0 auto}
-  .feat{display:flex; gap:13px; align-items:flex-start}
-  .feat .dot{flex:none; width:9px; height:9px; border-radius:50%; background:var(--gold); margin-top:9px}
-  .feat b{color:var(--ink); font-weight:600}
-  .feat span{color:var(--ink2)}
+  /* What it supports */
+  dl.features { margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 40px; }
+  dl.features div { padding: 16px 0; border-bottom: 1px solid var(--line); }
+  dl.features dt { font-weight: 600; margin-bottom: 3px; }
+  dl.features dd { margin: 0; color: var(--ink-2); font-size: 16px; }
 
-  .lineage{text-align:center}
-  .lineage p{max-width:680px; margin:0 auto; font-size:1.08rem; color:var(--ink2)}
-  .lineage .eyebrow{display:block; margin-bottom:14px}
+  .lineage p { max-width: 62ch; margin: 0; font-size: 19px; line-height: 1.6; color: var(--ink-2); }
 
-  .closing{text-align:center}
-  .closing h2{font-size:2.4rem}
-  .closing .btn{margin-top:24px}
+  .closing { text-align: left; }
+  .closing h2 { font-size: 48px; margin-bottom: 14px; }
+  .closing p { max-width: 54ch; color: var(--ink-2); margin: 0 0 26px; }
 
-  footer{padding:48px 0; border-top:1px solid var(--line); color:var(--ink3); font-size:.92rem; text-align:center}
-  footer a{color:var(--teal2); text-decoration:none}
-  footer a:hover{text-decoration:underline}
-  footer .links{margin-bottom:14px}
-  footer .links a{margin:0 11px; white-space:nowrap}
+  footer { padding: 40px 0 56px; border-top: 1px solid var(--line-2); font-size: 15px; color: var(--ink-3); }
+  footer .links { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-bottom: 14px; }
+  footer .links a { font-weight: 500; text-decoration: none; }
+  footer .links a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
-  @media(max-width:720px){
-    header{padding:56px 0 44px}
-    header h1{font-size:3rem} .tagline{font-size:1.28rem}
-    .steps{grid-template-columns:1fr} .features{grid-template-columns:1fr; gap:16px}
-    .sec-h h2{font-size:1.9rem} section{padding:50px 0}
+  @media (max-width: 860px) {
+    nav.folio { gap: 18px; padding: 0 18px; height: 58px; }
+    nav.folio .views { display: none; }
+    .wrap { padding: 0 20px; }
+    header.title { padding: 56px 0 40px; }
+    header.title::before { left: -40px; }
+    header.title h1 { font-size: 44px; }
+    header.title .tagline { font-size: 20px; }
+    figure.plate figcaption { flex-direction: column; gap: 4px; }
+    section { padding: 56px 0; }
+    .sec-head { grid-template-columns: 1fr; gap: 12px; }
+    .sec-head h2 { font-size: 31px; }
+    ol.steps { grid-template-columns: 1fr; gap: 28px; }
+    ul.uses { columns: 1; }
+    dl.features { grid-template-columns: 1fr; }
+    .closing h2 { font-size: 34px; }
   }
+  @media (min-width: 861px) and (max-width: 1100px) { ul.uses { columns: 2; } }
 </style>
 </head>
 <body>
 
-<header>
+<nav class="folio" aria-label="MIRL Map">
+  <a class="brand" href="./" aria-label="MIRL Map"><span class="bleed" aria-hidden="true"></span><b aria-hidden="true">MIRL</b><span class="tool" aria-hidden="true">Map</span></a>
+  <div class="views">
+    <a href="#example">The example</a>
+    <a href="#how">How it works</a>
+    <a href="#supports">What it supports</a>
+  </div>
+  <div class="tools">
+    <a class="btn primary" href="https://mirl-map-auth.mirl-ucsb.workers.dev/create">Create your own map</a>
+  </div>
+</nav>
+
+<header class="title">
   <div class="wrap">
-    <div class="eyebrow">Material / Image Research Lab &middot; UC Santa Barbara</div>
+    <span class="label">Material / Image Research Lab, UC Santa Barbara</span>
     <h1>MIRL Map</h1>
     <p class="tagline">Document a place through geolocated photographs and the writing that interprets them.</p>
     <p class="lede">
@@ -124,117 +191,108 @@
       and the classroom, and yours to own, cite, and keep.
     </p>
     <div class="cta-row">
-      <a class="btn btn-primary" href="https://mirl-map-auth.mirl-ucsb.workers.dev/create">
-        &#9733;&nbsp; Create your own map
-      </a>
-      <a class="btn btn-ghost" href="https://mirl-ucsb.github.io/mirl-map-example/">
-        See a live example
-      </a>
+      <a class="btn primary large" href="https://mirl-map-auth.mirl-ucsb.workers.dev/create">Create your own map</a>
+      <a class="btn large" href="https://mirl-ucsb.github.io/mirl-map-example/">See a live example</a>
     </div>
     <p class="cta-note">Creating a map opens GitHub, where you sign in and a copy is made in your own account. Free, open source, and no coding required.</p>
   </div>
 </header>
 
-<div class="wrap">
-  <figure class="figure" style="margin-bottom:0">
-    <a class="frame" href="https://mirl-ucsb.github.io/mirl-map-example/" target="_blank" rel="noopener" aria-label="Open the live example, The Managed Edge">
-      <div class="bar"><span class="d"></span><span class="d"></span><span class="d"></span><span class="u">mirl-ucsb.github.io/mirl-map-example</span></div>
-      <img src="images/example.jpg" loading="lazy" alt="The example map, The Managed Edge: a satellite view of the UC Santa Barbara coast with photographs pinned along a bluff path, and a side panel showing one photograph with its caption, a narrative, and a citation.">
-      <span class="open">Open the example &#8599;</span>
+<div class="wrap" id="example">
+  <figure class="plate">
+    <a href="https://mirl-ucsb.github.io/mirl-map-example/" target="_blank" rel="noopener" aria-label="Open the live example, The Managed Edge">
+      <img src="images/example.jpg" width="1600" height="1050" loading="lazy" alt="The example map, The Managed Edge: a paper-toned street map of the UC Santa Barbara coast with photographs pinned along a bluff path, one showing the direction its camera faced, and a side panel with that photograph, its caption, a narrative, and its source.">
     </a>
-    <figcaption class="figcap">
-      A live example: <em>The Managed Edge</em>, a documentary walk along the bluffs where UC
-      Santa Barbara meets the Pacific. Each photograph sits where it was taken, beside the
-      writing that reads it.
+    <figcaption>
+      <span>A live example: <em>The Managed Edge</em>, a documentary walk along the bluffs where UC Santa Barbara meets the Pacific. Each photograph sits where it was taken, beside the writing that reads it.</span>
+      <a class="url" href="https://mirl-ucsb.github.io/mirl-map-example/">Open the example &#8599;</a>
     </figcaption>
   </figure>
 </div>
 
-<section>
+<section id="how">
   <div class="wrap">
-    <div class="sec-h">
-      <div class="eyebrow">How it works</div>
-      <h2>From sign-in to a published map</h2>
+    <div class="sec-head">
+      <div><span class="label">How it works</span><h2>From sign-in to a published map</h2></div>
     </div>
-    <div class="steps">
-      <div class="step">
-        <div class="num">1</div>
+    <ol class="steps">
+      <li>
+        <span class="num">01</span>
         <h3>Make your own copy</h3>
         <p>Sign in with GitHub and a complete copy of the platform is created in your account. You hold the repository, the images, and the text from the start.</p>
-      </div>
-      <div class="step">
-        <div class="num">2</div>
+      </li>
+      <li>
+        <span class="num">02</span>
         <h3>Add photographs and interpretation</h3>
         <p>Work in a browser dashboard, or directly in plain text files. Each photograph takes a caption and an optional narrative; its location and orientation are read from the image itself.</p>
-      </div>
-      <div class="step">
-        <div class="num">3</div>
+      </li>
+      <li>
+        <span class="num">03</span>
         <h3>Publish and preserve</h3>
         <p>Publish your map and photo essay online at no cost, at an address you control. Everything is kept as plain images and text, legible long after the software has moved on.</p>
-      </div>
-    </div>
+      </li>
+    </ol>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <div class="sec-h">
-      <div class="eyebrow">What it is suited to</div>
-      <h2>One method, many projects</h2>
+    <div class="sec-head">
+      <div><span class="label">What it is suited to</span><h2>One method, many projects</h2></div>
       <p>MIRL Map is a method rather than a template. If a subject can be photographed and located on a map, it can be documented here.</p>
     </div>
-    <div class="uses">
-      <span class="chip">A neighborhood survey</span>
-      <span class="chip">A single monument</span>
-      <span class="chip">An archaeological site</span>
-      <span class="chip">An oral-history project</span>
-      <span class="chip">A field-documentation record</span>
-      <span class="chip">A teaching collection</span>
-      <span class="chip">An exhibition</span>
-      <span class="chip">A pilgrimage or migration route</span>
-      <span class="chip">A memory map</span>
-    </div>
+    <ul class="uses">
+      <li>A neighborhood survey</li>
+      <li>A single monument</li>
+      <li>An archaeological site</li>
+      <li>An oral-history project</li>
+      <li>A field-documentation record</li>
+      <li>A teaching collection</li>
+      <li>An exhibition</li>
+      <li>A pilgrimage or migration route</li>
+      <li>A memory map</li>
+    </ul>
   </div>
 </section>
 
-<section>
+<section id="supports">
   <div class="wrap">
-    <div class="sec-h">
-      <div class="eyebrow">What it supports</div>
-      <h2>Built for scholarly use</h2>
+    <div class="sec-head">
+      <div><span class="label">What it supports</span><h2>Built for scholarly use</h2></div>
       <p>A new map is nothing but your photographs and your words. Each further capability stays out of the way until you call on it.</p>
     </div>
-    <div class="features">
-      <div class="feat"><span class="dot"></span><span><b>An interactive map and a photo essay,</b> generated together from the same photographs and writing.</span></div>
-      <div class="feat"><span class="dot"></span><span><b>A citation for every photograph,</b> ready in Chicago, MLA, APA, and BibTeX.</span></div>
-      <div class="feat"><span class="dot"></span><span><b>Full-text search</b> across every caption and narrative at once.</span></div>
-      <div class="feat"><span class="dot"></span><span><b>Data you own,</b> kept as plain images and text in your own repository, free to export, archive, or move.</span></div>
-      <div class="feat"><span class="dot"></span><span><b>More than one language,</b> including right-to-left scripts such as Arabic.</span></div>
-      <div class="feat"><span class="dot"></span><span><b>Accessible by design,</b> with scalable text, high contrast, and reduced motion.</span></div>
-      <div class="feat"><span class="dot"></span><span><b>Optional layers</b> when a project calls for them: timelines, statistics, oral-history voices, before-and-after photographs, and georeferenced historical maps.</span></div>
-      <div class="feat"><span class="dot"></span><span><b>Open source and free,</b> with no account to maintain and nothing to lock you in.</span></div>
-    </div>
+    <dl class="features">
+      <div><dt>An interactive map and a photo essay</dt><dd>Generated together from the same photographs and writing.</dd></div>
+      <div><dt>A citation for every photograph</dt><dd>Ready in Chicago, MLA, APA, and BibTeX.</dd></div>
+      <div><dt>Full-text search</dt><dd>Across every caption and narrative at once.</dd></div>
+      <div><dt>Data you own</dt><dd>Kept as plain images and text in your own repository, free to export, archive, or move.</dd></div>
+      <div><dt>More than one language</dt><dd>Including right-to-left scripts such as Arabic.</dd></div>
+      <div><dt>Accessible by design</dt><dd>Scalable text, high contrast, and reduced motion.</dd></div>
+      <div><dt>Optional layers</dt><dd>When a project calls for them: timelines, statistics, oral-history voices, before-and-after photographs, and georeferenced historical maps.</dd></div>
+      <div><dt>Open source and free</dt><dd>With no account to maintain and nothing to lock you in.</dd></div>
+    </dl>
   </div>
 </section>
 
 <section class="lineage">
   <div class="wrap">
-    <span class="eyebrow">Where it comes from</span>
-    <h2 style="font-size:2.1rem; margin-bottom:16px">From a working project</h2>
-    <p>
-      MIRL Map began as a documentary map of the village of Lifta and was generalized so
-      that any researcher, teacher, or community could use the same method. It is developed
-      and maintained at the Material / Image Research Lab in the Department of History of
-      Art and Architecture, UC Santa Barbara.
-    </p>
+    <div class="sec-head">
+      <div><span class="label">Where it comes from</span><h2>From a working project</h2></div>
+      <p style="font-size:19px">
+        MIRL Map began as a documentary map of the village of Lifta and was generalized so
+        that any researcher, teacher, or community could use the same method. It is developed
+        and maintained at the Material / Image Research Lab in the Department of History of
+        Art and Architecture, UC Santa Barbara.
+      </p>
+    </div>
   </div>
 </section>
 
 <section class="closing">
   <div class="wrap">
     <h2>Begin your map</h2>
-    <p class="lede" style="margin-top:14px">Free to use and yours to keep. From signing in to your first photograph on the map is a matter of minutes.</p>
-    <a class="btn btn-primary" href="https://mirl-map-auth.mirl-ucsb.workers.dev/create">&#9733;&nbsp; Create your own map</a>
+    <p>Free to use and yours to keep. From signing in to your first photograph on the map is a matter of minutes.</p>
+    <a class="btn primary large" href="https://mirl-map-auth.mirl-ucsb.workers.dev/create">Create your own map</a>
   </div>
 </section>
 
